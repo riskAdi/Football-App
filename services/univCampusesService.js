@@ -1,17 +1,15 @@
 
 function create(dbSequelize) {
 
-    async function getUniv() {
+    async function getUnivList() {
 
-      const feesTypesList = await dbSequelize.lkFreeTypeModel.findAll();
+      const feesTypesList = await dbSequelize.universityModel.findAll();
       return feesTypesList;
     }
 
-  
+  //{ offset: 10, limit: 2 } name: { [Op.like]: '%ooth%' }
     return {
-    
-        getFeesType,
-        getAllCities
+        getUnivList
     };
   }
 

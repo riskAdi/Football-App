@@ -19,12 +19,13 @@ sequelize
 
   const lkCityModel           = require('./entities/lk_City')(sequelize);
   const lkFreeTypeModel       = require('./entities/lK_Fee_Type')(sequelize);
+  const universityModel       = require('./entities/university')(sequelize);
 
-//module.exports = sequelize;
 module.exports = {
   sequelize,
   lkCityModel,
-  lkFreeTypeModel
+  lkFreeTypeModel,
+  universityModel
 };
 
 
