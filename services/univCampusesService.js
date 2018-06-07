@@ -1,17 +1,43 @@
 
-function create(dbSequelize) {
+function create(dbSequelize,op) {
 
-    async function getUnivList() {
+    /* show univ list on like q result */
+    async function getUnivList(q) {
 
-      const feesTypesList = await dbSequelize.universityModel.findAll();
-      return feesTypesList;
+       /* show only top 10 with match */
+      const univList = await dbSequelize.universityModel.findAll(
+                                {
+                                    where: { univ:{[op.like]:'%'+q+'%'}},
+                                    offset: 0,
+                                    limit: 10
+                                });
+      return univList;
     }
 
-  //{ offset: 10, limit: 2 } name: { [Op.like]: '%ooth%' }
+
+    async function getUnivCampuses(univ_id) {
+
+        /*  assosciations **/
+       dbSequelize.universityCampusModel.belongsTo(dbSequelize.lkCityModel,{foreignKey: 'city'});
+       const univCampusList     = await dbSequelize.universityCampusModel.findAll(
+                                 {
+                                    include : [
+                                        { 
+                                          model: dbSequelize.lkCityModel, 
+                                          required: true,
+                                          attributes: ['title']
+                                        }
+                                      ], 
+                                    where: {univ_id:univ_id},
+                                    attributes: ['id','address']
+                                 });
+       return univCampusList;
+     }
+  
     return {
-        getUnivList
+        getUnivList,
+        getUnivCampuses
     };
   }
-
 
 module.exports.create = create;

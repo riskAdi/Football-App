@@ -17,15 +17,21 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-  const lkCityModel           = require('./entities/lk_City')(sequelize);
-  const lkFreeTypeModel       = require('./entities/lK_Fee_Type')(sequelize);
-  const universityModel       = require('./entities/university')(sequelize);
+  const lkCityModel                 = require('./entities/lk_City')(sequelize);
+  const lkFreeTypeModel             = require('./entities/lK_Fee_Type')(sequelize);
+  const universityModel             = require('./entities/university')(sequelize);
+  const universityCampusModel       = require('./entities/univCampuses')(sequelize);
+  const lkLevelModel                = require('./entities/lk_levels')(sequelize);
+  const lkCourseLevellModel         = require('./entities/lk_Course_Level')(sequelize);
 
 module.exports = {
   sequelize,
   lkCityModel,
   lkFreeTypeModel,
-  universityModel
+  universityModel,
+  universityCampusModel,
+  lkLevelModel,
+  lkCourseLevellModel
 };
 
 
