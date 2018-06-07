@@ -1,5 +1,7 @@
 require('dotenv').config();
 const logger = require('./libs/logger');
+//const bodyParser = require('body-parser');
+//const cookieParser = require('cookie-parser');
 const { port } = require('./configuration');
 const dbSequelize = require('./database');
 
@@ -29,6 +31,9 @@ lk_City.create({
 */
 const services = require('./services')(dbSequelize);
 const app = require('./http')(services);
+
+//app.use(bodyParser.json());
+//app.use(cookieParser());
 
 const server = app.listen(port, () => {
     logger.info(`Listening on *:${port}`);
