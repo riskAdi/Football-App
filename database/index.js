@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const logger = require('../libs/logger');
 const dbConConfig = require('../configuration');
 
-const sequelize = new Sequelize(dbConConfig.db,dbConConfig.user,dbConConfig.pass, {
+const sequelize = new Sequelize(dbConConfig.db, dbConConfig.user, dbConConfig.pass, {
   dialect: 'mysql',
   host: "localhost",
   port: 8889,
@@ -17,21 +17,22 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-  const lkCityModel                 = require('./entities/lk_City')(sequelize);
-  const lkFreeTypeModel             = require('./entities/lK_Fee_Type')(sequelize);
-  const universityModel             = require('./entities/university')(sequelize);
-  const universityCampusModel       = require('./entities/univCampuses')(sequelize);
-  const lkLevelModel                = require('./entities/lk_levels')(sequelize);
-  const lkCourseLevellModel         = require('./entities/lk_Course_Level')(sequelize);
+const lookupModel = require('./entities/lookup')(sequelize);
+const userModel = require('./entities/user')(sequelize);
+const userPinModel = require('./entities/user-pin')(sequelize);
+const userProfileModel = require('./entities/user-profile')(sequelize);
+const userPositionModel = require('./entities/user-position')(sequelize);
+const userSkillModel = require('./entities/user-skills')(sequelize);
 
 module.exports = {
   sequelize,
-  lkCityModel,
-  lkFreeTypeModel,
-  universityModel,
-  universityCampusModel,
-  lkLevelModel,
-  lkCourseLevellModel
+  lookupModel,
+  userModel,
+  userPinModel,
+  userProfileModel,
+  userPositionModel,
+  userSkillModel
+
 };
 
 

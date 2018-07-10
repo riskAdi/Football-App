@@ -1,19 +1,14 @@
 const Sequelize = require('sequelize');
 const op = Sequelize.Op;
-
-const cityCampusService      = require('./cityCampusesServcice');
-const lookupService          = require('./lookupServices');
-const universityService      = require('./univCampusesService');
+const lookupService = require('./lookupServices');
+const userService = require('./userServices');
 
 module.exports = (dbSequelize) => {
+    const lookupServiceObj = lookupService.create(dbSequelize, op);
+    const userServiceObj = userService.create(dbSequelize, op);
 
-    const cityCampusServiceObj  = cityCampusService.create(dbSequelize.sequelize);
-    const lookupServiceObj      = lookupService.create(dbSequelize,op);
-    const univServiceObj        = universityService.create(dbSequelize,op);
-    
     return ({
-        cityCampusServiceObj,
         lookupServiceObj,
-        univServiceObj,
+        userServiceObj
     });
-  };
+};

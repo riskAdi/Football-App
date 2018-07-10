@@ -15,8 +15,10 @@
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "express-validation": "^1.0.2",
+    "generate-pincode": "^5.0.2",
     "joi": "^13.3.0",
     "mysql2": "^1.5.3",
+    "randomstring": "^1.1.5",
     "sequelize": "^4.37.7"
   }
 }
