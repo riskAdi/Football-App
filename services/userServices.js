@@ -26,12 +26,18 @@ function create(dbSequelize, op) {
         return createUserSkills;
     }
 
+    async function validateUserPin(payLoad) {
+        const createUserSkills = await dbSequelize.userPinModel.find({ where: { user_id: payLoad.user_id, pin: payLoad.pin },raw: true});
+        return createUserSkills;
+    }
+
     return {
         addUser,
         addUserPin,
         addUserProfile,
         addUserPosition,
-        addUserSkills
+        addUserSkills,
+        validateUserPin
     };
 }
 

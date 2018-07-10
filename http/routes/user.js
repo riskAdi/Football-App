@@ -1,37 +1,41 @@
 const express = require('express');
 const asyncWrapper = require('../utils/asyncWrapper');
 const router = express.Router();
-const randomeString = require('randomstring');
-const gpc = require('generate-pincode');
 
 function create(services) {
 
-  router.get('/', asyncWrapper(async (req, res) => {
+  router.post('/validate', asyncWrapper(async (req, res) => {
 
     try {
-      const users = await services.userServiceObj.addUser({ phone: '923337707133', email: 'aak@zap.com', type: 1, status: 1 });
-      const userPin = await services.userServiceObj.addUserPin({ user_id: users.dataValues.id, pin: gpc(5), hash: randomeString.generate(), ip: req.connection.remoteAddress });
-      res.json(users);
+
+      const usersPin = await services.userServiceObj.validateUserPin({ pin: req.body.pin, user_id: res.locals.jwt_decode.user_id });
+      if (usersPin != null) {
+
+        if (usersPin.hash == req.body.hash) {
+          res.status(200);
+          res.json({ message: 'Successful validate.' });
+
+        } else {
+          res.status(400);
+          res.json({ message: 'Invalid request.' });
+        }
+
+      } else {
+        res.status(400);
+        res.json({ message: 'Your pincode is not valid.' });
+      }
 
     } catch (err) {
       await Promise.reject(err);
     }
   }));
 
-  router.get('/profile', asyncWrapper(async (req, res) => {
+  router.post('/profile', asyncWrapper(async (req, res) => {
+
+    req.body.user_id  = res.locals.jwt_decode.user_id;
 
     try {
-      const userProfile = await services.userServiceObj.addUserProfile(
-        {
-          user_id: 14,
-          first_name: 'Amjad',
-          last_name: 'akram',
-          gender: 1, age: '12',
-          weight: '55',
-          height: '7 inc',
-          pref_foot: 2
-        });
-
+      const userProfile = await services.userServiceObj.addUserProfile(req.body);
       res.json(userProfile);
 
     } catch (err) {
@@ -39,8 +43,13 @@ function create(services) {
     }
   }));
 
-  router.get('/positions', asyncWrapper(async (req, res) => {
+  router.post('/positions', asyncWrapper(async (req, res) => {
 
+    console.log("----------------");
+    console.log(res.locals.jwt_decode.user_id);
+    console.log(req.body);
+    console.log("----------------");
+    
     try {
       const userProfile = await services.userServiceObj.addUserPosition(
         {

@@ -1,4 +1,5 @@
 require('dotenv').config();
+const express = require('express');
 const logger = require('./libs/logger');
 const { port } = require('./configuration');
 const dbSequelize = require('./database');
@@ -8,7 +9,11 @@ const app = require('./http')(services);
 
 const server = app.listen(port, () => {
 
-// console.log();
+ 
+//app.use(cookieParser());
   
+  // console.log();
+
   //logger.info(`Listening on *:${port}`);
+
 });
