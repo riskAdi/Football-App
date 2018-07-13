@@ -4,7 +4,7 @@
  */
 const config = {
     host: process.env.DB_HOST,
-    port: process.env.PORT || 3300,
+    port: process.env.PORT || 3333,
     db: 'football',
     user: 'root',
     pass: 'root',

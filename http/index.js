@@ -5,8 +5,13 @@ var app = express();
 const CST = require('../constatns/constants');
 const jwt = require("jsonwebtoken");
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
+
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.static('public'))
 
 /* ** App Routes ** */
 const userRoute = require('./routes/user');
@@ -64,7 +69,7 @@ module.exports = (services) => {
 
   /*   **** user routes  ****  */
   const user = userRoute.create(services);
-  app.use('/users', isLoggedIn, user);
+  app.use('/users',isLoggedIn, user);
 
   /*   **** lookup routes  ****  */
   const lookup = lookupRoute.create(services, validate, validationModels);

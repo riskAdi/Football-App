@@ -5,6 +5,7 @@ module.exports = (sequelize) => {
     const UserProfile = sequelize.define('user_profile',
         {
             user_id: Sequelize.INTEGER,
+            profile: Sequelize.STRING,
             first_name: Sequelize.STRING,
             last_name: Sequelize.STRING,
             gender: Sequelize.INTEGER,
